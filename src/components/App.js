@@ -10,7 +10,7 @@ const App = () => {
     let interval = null;
    if(timeOn){
      interval = setInterval(()=>{
-       setCount(prevTime => prevTime - 1);
+       setCount(prevTime => prevTime == 0 ? clearInterval(interval) : prevTime - 1);
      },1000)
    }else{
      clearInterval(interval);
