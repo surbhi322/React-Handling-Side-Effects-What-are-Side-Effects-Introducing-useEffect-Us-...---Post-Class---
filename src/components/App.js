@@ -34,7 +34,7 @@ const App = () => {
           }else{
             if(event.key === 'Enter'){
               if(val === 0){
-                setCount(0);
+                
                 setTimeON(false);
               }else{
                 setTimeON(true);
