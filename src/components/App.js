@@ -1,54 +1,46 @@
-import React, { Component, useState, useEffect } from "react";
-import '../styles/App.css';
+https://github.com/surbhi322/React-Handling-Side-Effects-What-are-Side-Effects-Introducing-useEffect-Us-...---Post-Class---aimport React, { Component, useState, useEffect } from "react";
+import "../styles/App.css";
 
 const App = () => {
-  // write your code here 
-  const [count, setCount] = useState(0);
-  const [timeOn, setTimeON] = useState(false);
-  
-  useEffect(()=>{
-    let interval = null;
-   if(timeOn){
-     interval = setInterval(()=>{
-       setCount(prevTime => prevTime == 0 ? clearInterval(interval) : prevTime - 1);
-     },1000)
-   }else{
-     clearInterval(interval);
-   }
-   return ()=> clearInterval(interval);
-  },[timeOn])
- 
-   return (
+  // write your code here
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    if (seconds > 0) {
+      var id = setTimeout(() => {
+        setSeconds(seconds - 1);
+        // console.log("Timer active");
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(id);
+    };
+  }, [seconds]);
+
+  return (
     <div className="wrapper">
       <div id="whole-center">
         <h1>
-          Reverse countdown for<input id="timeCount" onKeyDown={(event)=>{
-          let val = Number(event.target.value);
-          console.log(typeof val)
-          val = Math.floor(val);
-          if(isNaN(val)){
-            if(event.key === 'Enter'){
-              setTimeON(false);
-              setCount(0);
-           }
-          }else{
-            if(event.key === 'Enter'){
-              if(val === 0){
-                 setCount(0);
-                setTimeON(false);
-              }else{
-                setTimeON(true);
-                setCount(val);
+          Reverse countdown for
+          <input
+            id="timeCount"
+            onKeyDown={(event) => {
+              let inpVal = event.target.value;
+              if (event.keyCode === 13) {
+                if (isNaN(inpVal) || inpVal < 0) {
+                  setSeconds(0);
+                } else {
+                  setSeconds(Math.floor(inpVal));
+                }
               }
-              
-           }
-          }
-
-          }} /> sec.
+            }}
+          />{" "}
+          sec.
         </h1>
       </div>
-      <div id="current-time">{count}</div>
+      <div id="current-time">{seconds}</div>
     </div>
-  )
-}
+  );
+};
+
 export default App;
