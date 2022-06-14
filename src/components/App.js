@@ -1,4 +1,4 @@
-https://github.com/surbhi322/React-Handling-Side-Effects-What-are-Side-Effects-Introducing-useEffect-Us-...---Post-Class---aimport React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, useEffect } from "react";
 import "../styles/App.css";
 
 const App = () => {
