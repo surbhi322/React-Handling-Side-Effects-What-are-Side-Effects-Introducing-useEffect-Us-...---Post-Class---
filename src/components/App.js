@@ -1,46 +1,20 @@
-import React, { Component, useState, useEffect } from "react";
-import "../styles/App.css";
+import React, {Component, useState} from "react";
+import '../styles/App.css';
 
-const App = () => {
-  // write your code here
-  const [seconds, setSeconds] = useState(0);
+const App = (props) => {
+  const [counter, setCounter] = useState(0);
+  const [data] = useState(props.slides);
 
-  useEffect(() => {
-    if (seconds > 0) {
-      var id = setTimeout(() => {
-        setSeconds(seconds - 1);
-        // console.log("Timer active");
-      }, 1000);
-    }
-    return () => {
-      clearTimeout(id);
-    };
-  }, [seconds]);
-
+ 
   return (
-    <div className="wrapper">
-      <div id="whole-center">
-        <h1>
-          Reverse countdown for
-          <input
-            id="timeCount"
-            onKeyDown={(event) => {
-              let inpVal = event.target.value;
-              if (event.keyCode === 13) {
-                if (isNaN(inpVal) || inpVal < 0) {
-                  setSeconds(0);
-                } else {
-                  setSeconds(Math.floor(inpVal));
-                }
-              }
-            }}
-          />{" "}
-          sec.
-        </h1>
-      </div>
-      <div id="current-time">{seconds}</div>
+    <div>
+    <h1 data-testid="title">{data[counter].title}</h1>
+    <p data-testid="text">{data[counter].text}</p>
+    <button data-testid="button-next" disabled={counter === props.slides.length-1 ? true : false} onClick={() =>setCounter(counter+1)}>Next</button>
+    <button data-testid="button-prev" disabled={counter === 0 ? true : false} onClick={() => setCounter(counter-1)}>Prev</button>
+    <button data-testid="button-restart" onClick={() =>setCounter(0)} disabled={counter === 0 ? true : false}>Restart</button>
     </div>
-  );
-};
+  )
+}
 
 export default App;
